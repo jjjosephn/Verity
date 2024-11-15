@@ -8,17 +8,19 @@ import { useForm } from "react-hook-form"
 import { set, z } from "zod"
 import { Button } from "@/components/ui/button"
 import { Form } from "@/components/ui/form"
-import { useRouter } from 'next/navigation'
+import { redirect, useRouter } from 'next/navigation'
 import CustomInput from './CustomInput'
 import { authFormSchema } from '@/lib/utils'
 import { Loader2 } from 'lucide-react'
-import { signIn, signUp } from '@/lib/actions/user.actions'
+import { getLoggedInUser, signIn, signUp } from '@/lib/actions/user.actions'
 
 const AuthForm = ({ type } : { type: string }) => {
+   console.log(type)
    const router = useRouter()
    const [user, setUser] = useState(null)
    const [isLoading, setIsLoading] = useState(false)
    const formSchema = authFormSchema(type)
+
    const form = useForm<z.infer<typeof formSchema>>({
       resolver: zodResolver(formSchema),
       defaultValues: {
@@ -27,6 +29,7 @@ const AuthForm = ({ type } : { type: string }) => {
          firstName: "",
          lastName: "",
          address: "",
+         city: "",
          state: "",
          postalCode: "",
          dateOfBirth: "",
@@ -36,6 +39,7 @@ const AuthForm = ({ type } : { type: string }) => {
    
     // 2. Define a submit handler.
    const onSubmit = async(data: z.infer<typeof formSchema>) => {
+      console.log("Submit Called");
       setIsLoading(true)
       try {
          if (type === 'sign-up') {
@@ -43,13 +47,12 @@ const AuthForm = ({ type } : { type: string }) => {
             setUser(newUser)
          }
          if (type === 'sign-in') {
-            // const response = await signIn({
-            //    email: data.email,
-            //    password: data.password
-            // })
-            // if(response) {
-            //    router.push('/')
-            // }
+            console.log('hello');
+            const response = await signIn({
+               email: data.email,
+               password: data.password
+            })
+            if (response) router.push('/')
          }
       } catch (error) {
          console.log(error)
@@ -72,6 +75,7 @@ const AuthForm = ({ type } : { type: string }) => {
             />
             <h1 className='text-26 font-ibm-plex-serif font-bold text-black-1'>Verity</h1>
          </Link>
+
          <div className='flex flex-col gap-1 md:gap-3'>
             <h1 className='text-24 lg:text-36 font-semibold text-gray-900'>
                {user ? 'Link Account' : type === 'sign-in' ? 'Sign In' : 'Sign Up'}
@@ -128,7 +132,7 @@ const AuthForm = ({ type } : { type: string }) => {
                               <Loader2 className='animate-spin' size={20} />
                               <p>Loading...</p>
                            </>
-                        ) : type === 'sign-in' ? 'Log in' : 'Sign Up' }
+                        ) : type === 'sign-in' ? 'Sign in' : 'Sign Up' }
                      </Button>
                   </div>
                </form>
@@ -136,11 +140,10 @@ const AuthForm = ({ type } : { type: string }) => {
             <footer className='flex justify-center gap-1'>
                <p className='text-14 font-normal text-gray-400'>
                   {type==='sign-in' ? 'Don\'t have an account? ' : 'Already have an account? '}
-                  <Link className='form-link' href={type === 'sign-up' ? '/sign-in' : '/sign-up' }>
-                     {type === 'sign-in' ? 'Sign up' : 'Sign in'}
-                  </Link>
                </p>
-
+               <Link className='form-link' href={type === 'sign-up' ? '/sign-in' : '/sign-up' }>
+                  {type === 'sign-in' ? 'Sign up' : 'Sign in'}
+               </Link>
             </footer>
          </>
       )} 

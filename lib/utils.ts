@@ -198,12 +198,12 @@ export const getTransactionStatus = (date: Date) => {
 export const authFormSchema = (type: string) => z.object({
   email: z.string().email('Invalid Email'),
   password: z.string().min(8, 'Invalid Password'),
-  firstName: type === 'sign-up' ? z.string().optional() : z.string().min(3, 'First Name must be at least 3 characters'),
-  lastName: type === 'sign-up' ? z.string().optional() : z.string().min(3, 'Last Name must be at least 3 characters'),
-  address: type === 'sign-up' ? z.string().optional() : z.string().min(3, 'Address must be at least 3 characters').max(50, 'Address must be at most 50 characters'),
-  city: type === 'sign-up' ? z.string().optional() : z.string().min(3, 'City must be at least 3 characters').max(50, 'Address must be at most 50 characters'),
-  state: type === 'sign-up' ? z.string().optional() : z.string().min(2, 'State must be 2 characters').max(2, 'State must be 2 characters'),
-  postalCode: type === 'sign-up' ? z.string().optional() : z.string().min(3, 'Postal Code must be at least 3 characters').max(5, 'Postal Code must be at most 5 characters'),
-  dateOfBirth: type === 'sign-up' ? z.string().optional() : z.string().min(10, 'Date of Birth must be 10 characters').max(10, 'Date of Birth must be 10 characters'),
-  ssn: type === 'sign-up' ? z.string().optional() : z.string().min(4, 'SSN must be 4 characters').max(4, 'SSN must be 4 characters')
+  firstName: type === 'sign-in' ? z.string().optional() : z.string().min(3, 'First Name must be at least 3 characters'),
+  lastName: type === 'sign-in' ? z.string().optional() : z.string().min(3, 'Last Name must be at least 3 characters'),
+  address: type === 'sign-in' ? z.string().optional() : z.string().min(3, 'Address must be at least 3 characters').max(50, 'Address must be at most 50 characters'),
+  city: type === 'sign-in' ? z.string().optional() : z.string().min(3, 'City must be at least 3 characters').max(50, 'Address must be at most 50 characters'),
+  state: type === 'sign-in' ? z.string().optional() : z.string().min(2, 'State must be 2 characters').max(2, 'State must be 2 characters'),
+  postalCode: type === 'sign-in' ? z.string().optional() : z.string().min(3, 'Postal Code must be at least 3 characters').max(5, 'Postal Code must be at most 5 characters'),
+  dateOfBirth: type === 'sign-in' ? z.string().optional() : z.string().min(10, 'Date of Birth must be 10 characters').max(10, 'Date of Birth must be 10 characters'),
+  ssn: type === 'sign-in' ? z.string().optional() : z.string().min(4, 'SSN must be 4 characters').max(4, 'SSN must be 4 characters')
 });

@@ -13,7 +13,7 @@ export const metadata: Metadata = {
   title: "Verity",
   description: "Verity is a modern banking platform designed for everyone",
   icons: {
-    icon: '/icons/logo.svg'
+    icon: '/icons/logos.jpeg'
   }
 };
 
